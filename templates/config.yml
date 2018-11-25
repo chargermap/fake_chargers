@@ -1,0 +1,9 @@
+location:
+    latitude: {{ item|int + 59 }}.1864515
+    longtitude: 24.8289499
+uuid: "{{ uuids[item|int - 1] }}"
+{#
+plugs:
+    schedule: 4
+    livequeue: 4
+#}

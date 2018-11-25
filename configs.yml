@@ -1,0 +1,37 @@
+- hosts: localhost
+  vars:
+      chargers: 10
+      uuids:
+          - BF8B3BB3-67A7-4A73-96C0-6B190F4C308A
+          - EEFDF724-C65D-4AD1-81BC-B4C56D8ACC3A
+          - 5644CD18-226D-42B8-84B1-E3410F72D59A
+          - EB42AB03-CD7C-4B12-A037-118E1E212F8D
+          - BDAEEA93-8B8F-4209-AB28-539823717D7A
+          - 6F173F17-2CF1-4620-A534-4011416AED60
+          - 77AF1158-6BB1-48C9-9D11-E850386C2702
+          - C30A94A7-EBFA-4637-A487-82B38EB82E18
+          - EF737869-AC96-446A-A3D0-8F17DD816B76
+          - 287D23EB-8EA5-4EB6-A7E4-4DA918ED5192
+          - B2495A18-76BA-4233-A290-7A8AC50028C7
+          - 1D196284-F4F9-4C63-BF7E-317C6D4CB3D3
+          - 95309E98-C38A-470A-B163-F4BFA4B5BFE2
+          - F4BE33D4-D7A5-4177-B5A2-63FA97A37502
+          - 51E48E3A-EE5E-41EF-B6D6-45E5E6EBE5EC
+          - 193D1D0B-35B2-4BB7-AF3A-07E28308C7DD
+          - 0268420E-D268-411B-A8DF-0E40FBAAF1BE
+          - EDAAAD39-953D-4A6B-88F5-245209C69800
+          - D90971A6-8AD8-4BC6-ABFD-0788B6F6806F
+          - C2C0F5E7-C13D-4D30-A1E0-27025DBF8463
+          
+  tasks:
+      - name: create dirs
+        file:
+            state: directory
+            path: "charger_{{ '%02d'|format(item|int) }}"
+        with_sequence: start=1 end="{{ chargers }}"
+
+      - name: put templates
+        template:
+            src: config.yml
+            dest: "charger_{{ '%02d'|format(item|int) }}/config.yml"
+        with_sequence: start=1 end="{{ chargers }}"
